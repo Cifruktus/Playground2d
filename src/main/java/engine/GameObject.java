@@ -16,9 +16,9 @@ public class GameObject {
     @Nullable
     public Collider collider = null;
 
-    // returns if it still alive
-    public void update(double dt, Environment environment){
-    }
+    public void preUpdate(double dt, Environment environment){}
+
+    public void update(double dt, Environment environment){}
 
     public void draw() {
         Painter.square(pos.x, pos.y, 0.01);

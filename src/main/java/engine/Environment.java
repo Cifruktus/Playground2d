@@ -77,6 +77,10 @@ public class Environment {
 
     public void update(double dt) {
         for (var o : gameObjects) {
+            o.preUpdate(dt, this);
+        }
+
+        for (var o : gameObjects) {
             o.update(dt, this);
         }
 
