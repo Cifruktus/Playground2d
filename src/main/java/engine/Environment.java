@@ -25,6 +25,10 @@ public class Environment {
         r = new Random();
     }
 
+    public <T extends GameObject> List<T> getObjectOfType(Class<T> cl) {
+        return getObjectOfType(null, -1, cl);
+    }
+
     public <T extends GameObject> List<T> getObjectOfType(Vector2d pos, double distance, Class<T> cl) {
         List<T> answer = new ArrayList<>();
 
@@ -115,9 +119,13 @@ public class Environment {
         return r.nextDouble() < dt * probability;
     }
 
-    public Vector2d getRandomPlace(){
-        return pos.add(size.mul(
-                new Vector2d(r.nextDouble(), r.nextDouble())
-        ));
+    public Vector2d getRandomPlace() {
+        return getRandomPlace(0);
+    }
+
+    public Vector2d getRandomPlace(double padding) {
+        return pos
+                .add(size.mul(padding))
+                .add(size.mul(1 - padding * 2).mul(new Vector2d(r.nextDouble(), r.nextDouble())));
     }
 }
