@@ -1,5 +1,6 @@
 package engine;
 
+import graphics.Color;
 import graphics.Colors;
 import math.Vector2d;
 
@@ -17,6 +18,7 @@ public class Environment {
     public double time = 0;
 
     public final Random r;
+    public Color backgroundColor = Colors.background;
 
     public Environment() {
         gameObjects = new ArrayList<>();
@@ -90,7 +92,7 @@ public class Environment {
     }
 
     public void draw() {
-        Colors.background.glClearColor();
+        backgroundColor.glClearColor();
 
         for (var o : gameObjects) {
             o.draw();
