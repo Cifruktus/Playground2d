@@ -3,15 +3,22 @@ package engine;
 import graphics.Color;
 import graphics.Colors;
 import math.Vector2d;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import static org.lwjgl.opengl.GL11.glTranslated;
+
 @SuppressWarnings("unused")
 public class Environment {
     List<GameObject> gameObjects;
     List<GameObject> addedObjects = new ArrayList<>();
+
+    @Nullable
+    public
+    GameObject cameraTarget = null;
 
     public Vector2d size = new Vector2d(1, 1);
     public Vector2d pos = new Vector2d(-0.5, -0.5);
@@ -101,6 +108,11 @@ public class Environment {
 
     public void draw() {
         backgroundColor.glClearColor();
+
+        if (cameraTarget != null) {
+            glTranslated(-cameraTarget.pos.x, -cameraTarget.pos.y,0);
+            if (!cameraTarget.alive) cameraTarget = null;
+        }
 
         for (var o : gameObjects) {
             o.draw();
