@@ -27,6 +27,13 @@ public class Environment {
     public final Random r;
     public Color backgroundColor = Colors.background;
 
+    public Environment(Vector2d size) {
+        this.size = size;
+        pos = size.mul(-0.5);
+        gameObjects = new ArrayList<>();
+        r = new Random();
+    }
+
     public Environment() {
         gameObjects = new ArrayList<>();
         r = new Random();

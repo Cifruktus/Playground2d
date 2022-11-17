@@ -1,5 +1,6 @@
 package graphics.window;
 
+import math.Vector2d;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.glfw.GLFWFramebufferSizeCallback;
 import org.lwjgl.glfw.GLFWKeyCallback;
@@ -42,6 +43,25 @@ public class MultisampledWindow {
     GLFWKeyCallback keyCallback;
     GLFWFramebufferSizeCallback fbCallback;
     Callback debugProc;
+
+    public Vector2d getViewport() {
+        float aspectRatio = width / (float) height;
+
+        if (aspectRatio < 1) {
+            return new Vector2d(1d, 1d / aspectRatio);
+        } else {
+            return new Vector2d(1d * aspectRatio, 1d);
+        }
+    }
+
+    public MultisampledWindow(int width, int height){
+        this.width = width;
+        this.height = height;
+    }
+
+    public MultisampledWindow(){
+
+    }
 
     public boolean isClosed(){
         return glfwWindowShouldClose(window);
@@ -171,7 +191,16 @@ public class MultisampledWindow {
             glViewport(0, 0, width, height);
 
           //  glTranslatef(-2f,-2f,0);
-            glScalef(2f,2f,0);
+
+            float aspectRatio = width / (float) height;
+
+            if (aspectRatio < 1) {
+                glScalef(2f,2f * aspectRatio,0);
+            } else {
+                glScalef(2f / aspectRatio,2f,0);
+            }
+
+
 
             dc.draw();
         }
