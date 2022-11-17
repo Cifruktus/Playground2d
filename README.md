@@ -1,7 +1,5 @@
 # Playground2d
-A simple 2D game engine made mostly for small simulations of various things I've seen on the internet or elsewhere. This project also includes simulations themselves.
-Written in Java and based on LWJGL library.
-
+My collection of random experiments and simulations using Java and LWJGL library.
 
 
 ## Boids
