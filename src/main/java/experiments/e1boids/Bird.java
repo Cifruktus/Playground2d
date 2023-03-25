@@ -94,6 +94,6 @@ public class Bird extends GameObject {
     @Override
     public void draw() {
         color.glColor();
-        Painter.bird(pos.x, pos.y, 0.005, -direction.direction() + Math.PI / 2);
+        Painter.bird(pos.x, pos.y, 0.005, direction.direction());
     }
 }

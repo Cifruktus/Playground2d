@@ -78,11 +78,6 @@ public class Vector2d {
         return "(" + x + ", "+ y + ")";
     }
 
-    @Deprecated
-    public double getDirection() {
-        return atan2(x,y) + Math.PI;
-    }
-
     public double direction(){
         return atan2(y,x);
     }

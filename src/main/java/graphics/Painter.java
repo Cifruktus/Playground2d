@@ -107,6 +107,8 @@ public class Painter {
     }
 
     public static void bird(double x, double y, double r, double angle) {
+        angle = -angle + Math.PI / 2;
+
         glBegin(GL_TRIANGLES);
 
 
