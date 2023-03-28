@@ -2,18 +2,18 @@ package engine.gameObjects.senses;
 
 import engine.Environment;
 import engine.GameObject;
+import experiments.ai.crumEater.Crumb;
 import experiments.e1boids.Bird;
 import graphics.Painter;
 import math.CustomMath;
 import math.Vector2d;
-import org.lwjgl.opengl.GL11;
 
 import java.util.List;
 
 import static java.lang.Math.*;
 
 public class Vision {
-    final GameObject parent;
+    public final GameObject parent;
     public final double distance;
     final double blurRadius = 0.2;
     final double fov;
@@ -124,17 +124,11 @@ public class Vision {
             }
         }
 
-
-     //   for (int i = 0; i < divisions; i++) {
-     //       var direction = angleFromSector(i, true);
-     //       Painter.vector(parent.pos, Vector2d.fromCorrectDirection(direction).mul(0.1).mul(distances[i]));
-     //   }
-
         return distances;
     }
 
     public double[] evaluate(Environment environment) {
-        var foodObjects = environment.getObjectOfType(parent.pos, distance, Bird.class);
+        var foodObjects = environment.getObjectOfType(parent.pos, distance, Crumb.class);
 
         double[] distances = new double[divisions];
 
@@ -146,7 +140,7 @@ public class Vision {
             if (influence <= 0) continue;
 
 
-            var objectAngle = parent.pos.sub(food.pos).direction();
+            var objectAngle = food.pos.sub(parent.pos).direction();
             // Painter.line(parent.pos, parent.pos.add(Vec2.fromDirection(objectAngle).mul(0.1)));
 
             int cell = sectorFromAngle(objectAngle);
@@ -169,12 +163,6 @@ public class Vision {
                 influenceMultiplier = 1 - min(1, max(0, (abs(distFromNextCell) - 0.5)) / blurRadius);
                 distances[nextCell] = max(distances[nextCell], influence * influenceMultiplier); // influence;
             }
-        }
-
-        GL11.glColor3f(0,1,0);
-        for (int i = 0; i < divisions; i++) {
-            var direction = (((i + 0.5) / (double) divisions) * fov) + parent.angle - (fov / 2);
-            Painter.vector(parent.pos, Vector2d.fromDirection(direction).mul(0.1).mul(distances[i]));
         }
 
         return distances;
@@ -238,18 +226,27 @@ public class Vision {
         return max(min((int) Math.floor(cellVal), divisions - 1), 0);
     }
 
-    public void draw(double focus) {
-        GL11.glColor4d(1,0,0,0.1);
-
+    public void draw() {
         for (int i = 0; i <= divisions; i++) {
             var direction = (((i + 0.0) / (double) divisions) * fov) + parent.angle - (fov / 2);
             Painter.line(parent.pos, parent.pos.add(Vector2d.fromDirection(direction).mul(0.1)));
         }
 
-        //GL11.glColor4d(1,0,0,0.5);
-        //double spreadAngle = (1.2 * fov / divisions) / 2;
-        ////double focusAngle = getFocusDirection(focus);
-        //Painter.line(parent.pos, parent.pos.add(Vector2d.fromCorrectDirection(focusAngle + spreadAngle).mul(0.1)));
-        //Painter.line(parent.pos, parent.pos.add(Vector2d.fromCorrectDirection(focusAngle - spreadAngle).mul(0.1)));
+        for (int i = 0; i < divisions; i++) {
+            var direction = (((i) / (double) divisions) * fov) + parent.angle - (fov / 2);
+            var directionNext = (((i + 1) / (double) divisions) * fov) + parent.angle - (fov / 2);
+            Painter.line(
+                    parent.pos.add(Vector2d.fromDirection(directionNext).mul(distance)),
+                    parent.pos.add(Vector2d.fromDirection(direction).mul(distance))
+            );
+        }
+    }
+
+    public void drawVisionData(double[] visionData) {
+        if (visionData == null) return;
+        for (int i = 0; i < divisions; i++) {
+            var direction = (((i + 0.5) / (double) divisions) * fov) + parent.angle - (fov / 2);
+            Painter.vector(parent.pos, Vector2d.fromDirection(direction).mul(0.1).mul(visionData[i]));
+        }
     }
 }

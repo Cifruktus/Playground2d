@@ -39,6 +39,11 @@ public class Environment {
         r = new Random();
     }
 
+    public Environment(Random r) {
+        gameObjects = new ArrayList<>();
+        this.r = r;
+    }
+
     public <T extends GameObject> List<T> getObjectOfType(Class<T> cl) {
         return getObjectOfType(null, -1, cl);
     }
@@ -146,5 +151,9 @@ public class Environment {
         return pos
                 .add(size.mul(padding))
                 .add(size.mul(1 - padding * 2).mul(new Vector2d(r.nextDouble(), r.nextDouble())));
+    }
+
+    public Vector2d getCenter(){
+        return pos.add(size.mul(0.5));
     }
 }

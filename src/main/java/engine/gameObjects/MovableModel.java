@@ -9,12 +9,10 @@ import math.Vector2d;
 import static org.lwjgl.opengl.GL11.glColor4d;
 
 public class MovableModel extends GameObject {
-    final double maxSpeed;
-    final double maxAngularSpeed;
+    public final double maxSpeed;
+    public final double maxAngularSpeed;
 
-    public double angle;
-
-    double desiredSpeed = 1;
+    public double desiredSpeed = 1;
     Vector2d desiredDir = new Vector2d(0,0);
 
     public MovableModel(Vector2d pos, double maxSpeed, double maxAngularSpeed) {
