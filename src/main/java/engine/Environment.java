@@ -131,6 +131,12 @@ public class Environment {
         }
     }
 
+    public double getDistanceFromBounds(Vector2d obj){
+        double xDist = Math.min(obj.x - pos.x, pos.x + size.x - obj.x);
+        double yDist = Math.min(obj.y - pos.y, pos.y + size.y - obj.y);
+        return Math.max(0, Math.min(xDist, yDist));
+    }
+
     boolean inInBounds(Vector2d obj) {
         if (pos.x > obj.x || pos.x + size.x < obj.x) return false;
         if (pos.y > obj.y || pos.y + size.y < obj.y) return false;
