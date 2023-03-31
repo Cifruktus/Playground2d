@@ -2,7 +2,17 @@
 My collection of random experiments and simulations using Java and LWJGL library.
 
 
-## Boids
+## Evolutionary neural network projects
+
+### Crumb eater
+
+<img src="../media/gifs/eater1.webp" alt="crumb eater demo" width="320"/>
+
+A robot "sees" crumbs in its environment through a vision system. The neural network receives input on the crumbs' locations, robot's orientation and distance from the play field center and current time. It outputs a rotation and speed value for the robot's movement. Performance is measured by the number of crumbs eaten within a time frame.
+
+## Other projects
+
+### Boids
 
 ![boids](../media/gifs/boids.gif?raw=true)
 
@@ -15,7 +25,7 @@ More info:
 
 
 
-## Fireflies
+### Fireflies
 
 ![fireflies](../media/gifs/fireflies.gif?raw=true)
 
@@ -29,7 +39,7 @@ More info:
 
 
 
-## Gravity
+### Gravity
 
 ![gravity](../media/gifs/gravity.gif?raw=true)
 
